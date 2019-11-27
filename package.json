@@ -1,0 +1,25 @@
+{
+  "name": "simple_player",
+  "version": "1.0.0",
+  "description": "A simple player for movie.stu.nchu.edu.cn",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js",
+    "start": "node index.js"
+  },
+  "author": "IITII",
+  "license": "ISC",
+  "dependencies": {
+    "i": "^0.3.6",
+    "koa": "^2.11.0",
+    "koa-convert": "latest",
+    "koa-router": "^7.4.0",
+    "sequelize": "^5.21.2",
+    "tedious": "^6.6.2"
+  },
+  "devDependencies": {
+    "koa-bodyparser": "^4.2.1",
+    "koa-log4": "^2.3.2",
+    "koa-static": "^5.0.0"
+  }
+}

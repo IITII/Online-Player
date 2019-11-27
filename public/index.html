@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Player</title>
+    <link href="css/video-js.css" rel="stylesheet"/>
+    <script src="js/video.js"></script>
+    <script src="js/videojs-ie8.min.js"></script>
+
+    <script src="js/jquery.min.js"></script>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/bootstrap-grid.min.css" rel="stylesheet"/>
+    <link href="css/bootstrap-reboot.min.css" rel="stylesheet"/>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+</head>
+<body style="font-family:  'PT Mono',serif,'Source Code Pro','Source Serif Pro','Fira Code'">
+<header>
+    <nav class="navbar navbar-dark bg-dark">
+        <span class="navbar-brand mb-0 h1">Online Player</span>
+    </nav>
+</header>
+<main role="main" class="container">
+    <div class="py-5 text-center">
+        <h3 style="font-family:  'PT Mono',serif,'Source Code Pro','Source Serif Pro','Fira Code'">
+            Online Player
+        </h3>
+    </div>
+
+    <div class="container">
+
+        <div class="container form-row">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="addon-wrapping">影视站网址：</span>
+                </div>
+                <input id="URL" value="" type="url" name="URL" class="form-control" placeholder="请输入影视站网址..."
+                       aria-label="Recipient's username"
+                       aria-describedby="button-addon2">
+                <div class="input-group-append">
+                    <button id="change" class="btn btn-primary" type="button" onclick="movieChange()">Submit</button>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="direct">直链地址：</span>
+                </div>
+                <input id="directURL" value="" type="url" class="form-control" placeholder="请输入URL..."
+                       aria-label="Recipient's username"
+                       aria-describedby="button-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" onclick="sourceChange()">Submit</button>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <div onfocus="this.blur()" class="input-group-prepend">
+                    <span class="input-group-text" id="data">直链：</span>
+                </div>
+                <input disabled contenteditable="false" id="copyData" value="" type="url" class="form-control"
+                       placeholder="待生成..."
+                       aria-label="getUrl"
+                       aria-describedby="button-addon2">
+                <div class="input-group-append">
+                    <button type="button" id="copyBtn" class="btn btn-secondary" data-toggle="tooltip"
+                            data-placement="right" title="Copy to">
+                        Copy!
+                    </button>
+                </div>
+            </div>
+        </div>
+        <video id="onlinePlayer"
+               class="video-js vjs-fluid vjs-live vjs-liveui"
+               style="object-fit: fill;"
+               preload="auto"
+        >
+            <source src="//vjs.zencdn.net/v/oceans.mp4"
+                    type="video/mp4"
+            >
+        </video>
+    </div>
+    <br>
+</main>
+</body>
+<script type="text/javascript" src="js/action.js"></script>
+</html>
