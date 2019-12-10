@@ -123,7 +123,10 @@ function movieChange() {
                     document.getElementById('copyData').value = data;
                 } else
                     alert("返回值为空！！！");
-            });
+            })
+                .error(function () {
+                    alert("Return Error!!!");
+                })
         } else
             alert("Error URL!!!");
     } else {
