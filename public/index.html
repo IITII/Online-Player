@@ -148,32 +148,6 @@
                 </div>
             </div>
         </div>
-
-        <!--        Design for no keyboard devices, like mobile phone-->
-        <details style="text-align: center;display: flex;line-height: 3">
-            <summary>
-                Controls
-            </summary>
-            <div>
-                <button type="button" class="btn btn-secondary  col-md-auto" onclick="startStop()">Start/Stop</button>
-                <button type="button" class="btn btn-secondary  col-md-auto" onclick="loopPlayer()">Loop</button>
-                <button type="button" class="btn btn-danger  col-md-auto" onclick="fullScreen()">FullScreen</button>
-                <button type="button" class="btn btn-danger  col-md-auto" onclick="fullWindow()">FullWindows/Exit ..</button>
-            </div>
-            <div>
-                <button type="button" class="btn btn-outline-warning col-md-auto" onclick="forwardBackward(37)">Backward</button>
-                <button type="button" class="btn btn-outline-warning col-md-auto" onclick="forwardBackward(39)">Forward</button>
-                <button type="button" class="btn btn-outline-success col-md-auto" onclick="forwardBackward(38)">Vol++</button>
-                <button type="button" class="btn btn-outline-success col-md-auto" onclick="forwardBackward(40)">Vol--</button>
-            </div>
-            <div>
-                <button type="button" class="btn btn-dark col-md-auto" onclick="playRate(90)">Default Speed</button>
-                <button type="button" class="btn btn-dark col-md-auto" onclick="playRate(88)">Speed --</button>
-                <button type="button" class="btn btn-dark col-md-auto" onclick="playRate(67)">Speed ++</button>
-            </div>
-        </details>
-        <br>
-
         <!--style="object-fit: fill;"-->
         <video id="onlinePlayer"
                class="video-js vjs-fluid vjs-live vjs-liveui"
@@ -184,6 +158,32 @@
             >
         </video>
     </div>
+    <br>
+
+
+    <!--        Design for no keyboard devices, like mobile phone-->
+    <details style="text-align: center;display: flex;line-height: 3">
+        <summary>
+            Controls
+        </summary>
+        <div>
+            <button type="button" class="btn btn-secondary  col-md-auto" onclick="startStop()">Start/Stop</button>
+            <button type="button" class="btn btn-secondary  col-md-auto" onclick="loopPlayer()">Loop</button>
+            <button type="button" class="btn btn-danger  col-md-auto" onclick="fullWindow()">FullWindows/Exit ..</button>
+            <button type="button" class="btn btn-danger  col-md-auto" onclick="fullScreen()">FullScreen</button>
+        </div>
+        <div>
+            <button type="button" class="btn btn-dark col-md-auto" onclick="playRate(88)">Speed --</button>
+            <button type="button" class="btn btn-dark col-md-auto" onclick="playRate(90)">Default Speed</button>
+            <button type="button" class="btn btn-dark col-md-auto" onclick="playRate(67)">Speed ++</button>
+        </div>
+        <div>
+            <button type="button" class="btn btn-outline-warning col-md-auto" onclick="forwardBackward(37)">Backward</button>
+            <button type="button" class="btn btn-outline-success col-md-auto" onclick="forwardBackward(40)">Vol--</button>
+            <button type="button" class="btn btn-outline-success col-md-auto" onclick="forwardBackward(38)">Vol++</button>
+            <button type="button" class="btn btn-outline-warning col-md-auto" onclick="forwardBackward(39)">Forward</button>
+        </div>
+    </details>
     <br>
 </main>
 </body>
