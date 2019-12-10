@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Player</title>
+    <link href="css/video-js.css" rel="stylesheet"/>
+    <script src="js/video.js"></script>
+    <script src="js/videojs-ie8.min.js"></script>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/clipboard.min.js"></script>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/bootstrap-grid.min.css" rel="stylesheet"/>
+    <link href="css/bootstrap-reboot.min.css" rel="stylesheet"/>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+</head>
+<body style="font-family:  'PT Mono',serif,'Source Code Pro','Source Serif Pro','Fira Code'">
+<header>
+    <nav class="navbar navbar-dark bg-dark">
+        <span class="navbar-brand mb-0 h1">Online Player</span>
+    </nav>
+</header>
+<main role="main" class="container">
+    <div class="py-5 text-center">
+        <h3 style="font-family:  'PT Mono',serif,'Source Code Pro','Source Serif Pro','Fira Code'">
+            Online Player
+        </h3>
+    </div>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <h4 class="alert-heading">快捷键说明</h4>
+        <hr>
+        <table style="text-align: center">
+            <thead>
+            <tr>
+                <th style="text-align:center">按键</th>
+                <th style="text-align:center">事件</th>
+                <th>额外说明</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td style="text-align:center">空格</td>
+                <td style="text-align:center">开始/暂停</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td style="text-align:center">回车</td>
+                <td style="text-align:center">全屏/退出全屏</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td style="text-align:center">L</td>
+                <td style="text-align:center">循环播放</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td style="text-align:center">Shift</td>
+                <td style="text-align:center">浏览器全屏</td>
+                <td>实验性，不保证成功</td>
+            </tr>
+            <tr>
+                <td style="text-align:center">←</td>
+                <td style="text-align:center">快退5秒</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td style="text-align:center">→</td>
+                <td style="text-align:center">快进5秒</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td style="text-align:center">↑</td>
+                <td style="text-align:center">音量加 10%</td>
+                <td>上限为100%</td>
+            </tr>
+            <tr>
+                <td style="text-align:center">↓</td>
+                <td style="text-align:center">音量减 10%</td>
+                <td>最低为0</td>
+            </tr>
+            <tr>
+                <td style="text-align:center">c</td>
+                <td style="text-align:center">播放速度加 0.05</td>
+                <td>上限为12</td>
+            </tr>
+            <tr>
+                <td style="text-align:center">x</td>
+                <td style="text-align:center">播放速度减 0.05</td>
+                <td>下限为0.1</td>
+            </tr>
+            <tr>
+                <td style="text-align:center">z</td>
+                <td style="text-align:center">播放速度重置为1，正常</td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+    <div class="container">
+
+        <div class="container form-row">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="addon-wrapping">影视站网址：</span>
+                </div>
+                <input id="URL" value="" type="url" name="URL" class="form-control" placeholder="请输入影视站网址..."
+                       aria-label="Recipient's username"
+                       aria-describedby="button-addon2">
+                <div class="input-group-append">
+                    <button id="change" class="btn btn-primary" type="button" onclick="movieChange()">Submit</button>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="direct">直链地址：</span>
+                </div>
+                <input id="directURL" value="" type="url" class="form-control" placeholder="请输入URL..."
+                       aria-label="Recipient's username"
+                       aria-describedby="button-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" onclick="sourceChange()">Submit</button>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <div onfocus="this.blur()" class="input-group-prepend">
+                    <span class="input-group-text" id="data">直链：</span>
+                </div>
+                <input readonly contenteditable="false" id="copyData" value="" type="url" class="form-control"
+                       placeholder="待生成..."
+                       aria-label="getUrl"
+                       aria-describedby="button-addon2">
+                <div class="input-group-append">
+                    <!--                    <button type="button" id="copyBtn" class="btn btn-secondary" data-toggle="tooltip"-->
+                    <!--                            data-placement="right" title="Copy to">-->
+                    <!--                        Copy!-->
+                    <!--                    </button>-->
+                    <button type="button" id="copyBtn" class="btn btn-secondary" data-toggle="tooltip"
+                            data-placement="right" title="复制到剪切板..." data-clipboard-target="#copyData">
+                        Copy!
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!--style="object-fit: fill;"-->
+        <video id="onlinePlayer"
+               class="video-js vjs-fluid vjs-live vjs-liveui"
+               preload="auto"
+        >
+            <source src="//vjs.zencdn.net/v/oceans.mp4"
+                    type="video/mp4"
+            >
+        </video>
+    </div>
+    <br>
+
+
+    <!--        Design for no keyboard devices, like mobile phone-->
+    <details style="text-align: center;display: flex;line-height: 3">
+        <summary>
+            Controls
+        </summary>
+        <div>
+            <button type="button" class="btn btn-secondary  col-md-auto" onclick="startStop()">Start/Stop</button>
+            <button type="button" class="btn btn-secondary  col-md-auto" onclick="loopPlayer()">Loop</button>
+            <button type="button" class="btn btn-danger  col-md-auto" onclick="fullWindow()">FullWindows/Exit ..</button>
+            <button type="button" class="btn btn-danger  col-md-auto" onclick="fullScreen()">FullScreen</button>
+        </div>
+        <div>
+            <button type="button" class="btn btn-dark col-md-auto" onclick="playRate(88)">Speed --</button>
+            <button type="button" class="btn btn-dark col-md-auto" onclick="playRate(90)">Default Speed</button>
+            <button type="button" class="btn btn-dark col-md-auto" onclick="playRate(67)">Speed ++</button>
+        </div>
+        <div>
+            <button type="button" class="btn btn-outline-warning col-md-auto" onclick="forwardBackward(37)">Backward</button>
+            <button type="button" class="btn btn-outline-success col-md-auto" onclick="forwardBackward(40)">Vol--</button>
+            <button type="button" class="btn btn-outline-success col-md-auto" onclick="forwardBackward(38)">Vol++</button>
+            <button type="button" class="btn btn-outline-warning col-md-auto" onclick="forwardBackward(39)">Forward</button>
+        </div>
+    </details>
+    <br>
+</main>
+</body>
+<script type="text/javascript" src="js/action.js"></script>
+</html>
