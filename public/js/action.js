@@ -41,6 +41,9 @@ window.onload = videojs('onlinePlayer', {
     responsive: true,
     liveui: true,
     controls: true,
+    controlBar:{
+        'pictureInPictureToggle': true
+    },
     userActions: {
         hotkeys: function (event) {
             console.log(event.which);
@@ -66,6 +69,7 @@ window.onload = videojs('onlinePlayer', {
                     forwardBackward(event.which);
                     //播放速度控制
                     playRate(event.which);
+                    pictureInPicture(event.which);
                     break;
             }
         }
@@ -162,7 +166,7 @@ function forwardBackward(keyValue) {
         // 方向键左
         case 37:
             player.currentTime(player.currentTime() - config.timeAdjust.backward);
-            console.log("Volume: " + player.currentTime());
+            console.log("Time: " + player.currentTime());
             break;
         //方向键上
         case 38:
@@ -172,7 +176,7 @@ function forwardBackward(keyValue) {
         //方向键右
         case 39:
             player.currentTime(player.currentTime() + config.timeAdjust.forward);
-            console.log("Volume: " + player.currentTime());
+            console.log("Time: " + player.currentTime());
             break;
         //方向键 下
         case 40:
@@ -206,5 +210,21 @@ function playRate(keyValue) {
             break;
         default:
             break;
+    }
+}
+function pictureInPicture(keyValue) {
+    if(document.pictureInPictureEnabled){
+        switch (keyValue) {
+            case 80:
+                document.getElementById(config.playerId + "_html5_api").requestPictureInPicture();
+                break;
+            // case 80:
+            //     document.exitPictureInPicture();
+            //     break;
+            default:
+                break;
+        }
+    }else{
+        alert("Current Browser isn't support PictureInPicture!!!");
     }
 }
