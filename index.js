@@ -90,26 +90,36 @@ function checkIdentify(ip) {
         return value === ip;
     });
 }
+
 router.post('/', async (ctx, next) => {
     logger.info(ctx.request.body);
     if (ctx.request.body.hasOwnProperty('MovieID') && !(ctx.request.body.MovieID === "")) {
         //if (checkIdentify(ctx.ip)) {
-                let movieId = ctx.request.body.MovieID;
-                let request = await Request.findByPk(movieId);
-                if (request != null ){
-                    ctx.response.status=200;
-                    ctx.response.body=request.MovieURL;
-                }else{
-                    ctx.response.status=404;
-                    ctx.response.body="MovieId not found! ";
-                }
-            }else{
-                ctx.response.status = 404;
-                ctx.response.body="No right request param!!! ";
+        let movieId = ctx.request.body.MovieID;
+        try {
+            if (Number.parseInt(movieId) < 1) {
+                ctx.response.status = 400;
+                ctx.response.body = "Bad Request!";
             }
-        //}
+        } catch (e) {
+            ctx.response.status = 403;
+            ctx.response.body = "Forbidden!";
+        }
+        let request = await Request.findByPk(movieId);
+        if (request != null) {
+            ctx.response.status = 200;
+            ctx.response.body = request.MovieURL;
+        } else {
+            ctx.response.status = 404;
+            ctx.response.body = "MovieId not found! ";
+        }
+    } else {
+        ctx.response.status = 404;
+        ctx.response.body = "Not right request param!!! ";
+    }
+    //}
     // return ctx.request.send(()=>{
     //     "233"
     // });
 });
-//connectDB();
+connectDB();
