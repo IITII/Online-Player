@@ -14,6 +14,12 @@ const app = new Koa();
 const router = Router();
 
 logger.level = config.loggerLevel;
+let customError = {
+    error: false,
+    errorCode: 500,
+    errorInfo: ""
+};
+
 const Request = sequelize.define('Movie', {
     MovieID: {type: Sequelize.INTEGER, allowNull: false, primaryKey: true},
     MovieName: {type: Sequelize.STRING, allowNull: true},
@@ -56,7 +62,7 @@ const staticPath = './public';
 app.use(log4js.koaLogger(log4js.getLogger('http'), {level: config.loggerLevel}));
 app.use(serve(path.join(__dirname, staticPath)));
 app.listen(config.port, () => {
-    logger.info('Service is listening on port: ' + config.port)
+    logger.info('Listening on port: ' + config.port)
 });
 
 async function connectDB() {
@@ -67,21 +73,25 @@ async function connectDB() {
         .catch(ConnectionRefusedError => {
             logger.log("数据库连接失败！\n请检查数据库是否已启动！");
             logger.debug(ConnectionRefusedError);
-            process.exit(1);
+            //process.exit(1);
+            customError.error = true;
         })
         .catch(ConnectionError => {
             logger.info("目标主机访问失败！");
             logger.debug(ConnectionError);
-            process.exit(1);
+            //process.exit(1);
+            customError.error = true;
         })
         .catch(AccessDeniedError => {
             logger.info("数据库访问失败！\n请检查用户名和密码！\n请检查目标主机的目标数据库是否存在或是否有访问权限！");
             logger.debug(AccessDeniedError);
-            process.exit(1);
+            //process.exit(1);
+            customError.error = true;
         })
         .catch(error => {
             logger.debug(error);
-            process.exit(1);
+            //process.exit(1);
+            customError.error = true;
         });
 }
 
@@ -95,6 +105,11 @@ router.post('/', async (ctx, next) => {
     logger.info(ctx.request.body);
     if (ctx.request.body.hasOwnProperty('MovieID') && !(ctx.request.body.MovieID === "")) {
         //if (checkIdentify(ctx.ip)) {
+        if (customError.error) {
+            ctx.res.status = customError.errorCode;
+            ctx.res.body = customError.errorInfo;
+            return;
+        }
         let movieId = ctx.request.body.MovieID;
         try {
             if (Number.parseInt(movieId) < 1) {
